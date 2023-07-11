@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title id="titlee">Google Docs</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      href="https://th.bing.com/th/id/OIP.EAodnEd2kHkk-AAlSzRg4QHaHa?pid=ImgDet&rs=1"
+    />
+    
+    <style>
+      body {
+        margin: 0;
+      }
+
+      #sidebar {
+        position: fixed;
+        right: -200px;
+        top: 0;
+        height: 100%;
+        width:25%;
+        background-color:grey;
+        padding: 0px;
+        transition: transform 0.5s ease;
+        
+
+      }
+
+      #toggleButton {
+        width: 90%;
+        padding: 10px;
+        position:relative;
+        left:5%;
+      }
+
+      #collapseButton {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        transition: transform 0.3s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      #collapseButton #arrow {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: solid #333;
+        border-width: 0 2px 2px 0;
+        transform: rotate(130deg);
+        transition: transform 0.4s ease;
+      }
+
+      .collapsed #collapseButton #arrow {
+        transform: rotate(-45deg);
+      }
+
+      .collapsed {
+        position:relative;
+        left:40%;
+        transition: transform 0.4 ease;
+      }
+
+      .invis {
+        background-color: rgba(0, 0, 0, 0);
+      }
+    </style>
+
+    <script>
+      
+        
+      
+      
+      
+    </script>
+  </head>
+  <body id="body">
+    <ul class="pages">
+      <li class="chat page">
+        <div class="chatArea">
+          <div id="sidebar" class="collapsed">
+            <button id="toggleButton">Toggle Mute</button>
+            <button id="collapseButton">
+              <span id="arrow"></span>
+            </button>
+          </div>
+
+          <ul class="messages"></ul>
+        </div>
+        <div class="inputs">
+          <p id="text-typing"></p>
+          <input class="inputMessage" placeholder="Message..." />
+          <button class="send">Send</button>
+        </div>
+        
+        <script>
+          function requestSoundAccess() {
+            // Check if sound access permission is already granted
+            if (navigator.permissions) {
+              navigator.permissions
+                .query({ name: "microphone" })
+                .then(function (permissionStatus) {
+                  if (permissionStatus.state === "granted") {
+                    console.log("Sound access already granted");
+                    // Sound access is already granted
+                    // You can handle further logic here
+                  } else {
+                    // Prompt user for sound access
+                    navigator.mediaDevices
+                      .getUserMedia({ audio: true })
+                      .then(function (stream) {
+                        console.log("Sound access granted");
+                        // User granted sound access
+                        // You can handle further logic here
+                      })
+                      .catch(function (error) {
+                        console.log("Sound access denied");
+                        // User denied sound access or an error occurred
+                        // You can handle further logic here
+                      });
+                  }
+                })
+                .catch(function (error) {
+                  console.log("Error checking sound access permission:", error);
+                  // An error occurred while checking permission
+                  // You can handle further logic here
+                });
+            } else {
+              console.log("Browser does not support permissions API");
+              // Browser does not support the permissions API
+              // You can handle further logic here
+            }
+          }
+
+          // Call the function to request sound access
+          requestSoundAccess();
+        </script>
+      </li>
+
+      <li class="login page">
+        <div class="form">
+          <h3 class="title">Username</h3>
+
+          <input
+            class="usernameInput"
+            type="text"
+            maxlength="15"
+            id="usernameInput"
+          />
+          <div id="myNav" class="overlay">
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+              >&times;</a
+            >
+            <hr />
+            <!-- Overlay content -->
+            <div class="overlay-content">
+              <a href="#" onclick="TermsFunction()" style="font-size: 5em"></a>
+            </div>
+          </div>
+
+          <!-- Use any element to open/show the overlay navigation menu -->
+          <button class="loginbutton">Enter</button>
+          <div class="tac">
+            <br />
+            <a href="/termsandconditions.html"><h2></h2></a>
+            <!DOCTYPE html>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <script></script>
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const divElement = document.getElementById("sidebar");
+        const collapseButton = document.getElementById("collapseButton");
+        const inputMessages = document.getElementsByClassName("inputMessage");
+
+        // Add event listener to the collapse button
+        collapseButton.addEventListener("click", function () {
+          divElement.classList.toggle("collapsed");
+          divElement.classList.toggle("invis");
+
+          // Check if the sidebar is collapsed and has the 'invis' class
+          if (!divElement.classList.contains("collapsed") && !divElement.classList.contains("invis")) {
+            console.log("Sidebar is collapsed");
+            // Increase the width of the input messages
+            for (var i = 0; i < inputMessages.length; i++) {
+              inputMessages[i].style.width = "100%";
+            }
+          } else {
+            for (var i = 0; i < inputMessages.length; i++) {
+              inputMessages[i].style.width = "85%";
+            }
+            // Handle the else condition if needed
+          }
+        });
+      });
+    </script>
+  </body>
+  
+</html>
